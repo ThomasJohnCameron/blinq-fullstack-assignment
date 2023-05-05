@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import ExpanderPanel from "../components/Expander/Index";
 
 const Home: NextPage = () => {
   const [message, setMessage] = useState("");
@@ -28,6 +29,16 @@ const Home: NextPage = () => {
     }
   };
 
+  const [expandedPanel, setExpandedPanel] = useState<number | null>(null);
+
+  const handleToggle = (panelIndex: number) => {
+    if (expandedPanel === panelIndex) {
+      setExpandedPanel(null);
+    } else {
+      setExpandedPanel(panelIndex);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -43,40 +54,67 @@ const Home: NextPage = () => {
         {message && <p className={styles.message}>{message}</p>}
 
         <div className={styles.grid}>
-          <form
-            className={styles.card}
-            onSubmit={(event) => handleSubmit(event, "Salesforce")}
+          <ExpanderPanel
+            title="Salesforce"
+            expanded={expandedPanel === 1}
+            onToggle={() => handleToggle(1)}
           >
-            <h3>Salesforce</h3>
-            <input name="client_id" placeholder="Client ID" required />
-            <input name="client_secret" placeholder="Client Secret" required />
-            <button type="submit">Connect</button>
-          </form>
+            <form
+              className={styles.card}
+              onSubmit={(event) => handleSubmit(event, "Salesforce")}
+            >
+              <input name="client_id" placeholder="Client ID" required />
+              <input
+                name="client_secret"
+                placeholder="Client Secret"
+                required
+              />
+              <button type="submit">Connect</button>
+            </form>
+          </ExpanderPanel>
 
-          <form
-            className={styles.card}
-            onSubmit={(event) => handleSubmit(event, "HubSpot")}
+          <ExpanderPanel
+            title="HubSpot"
+            expanded={expandedPanel === 2}
+            onToggle={() => handleToggle(2)}
           >
-            <h3>HubSpot</h3>
-            <input name="tenant_domain" placeholder="Tenant Domain" required />
-            <input name="client_id" placeholder="Client ID" required />
-            <input name="client_secret" placeholder="Client Secret" required />
-            <input
-              name="field_mappings"
-              placeholder="Field Mappings"
-              required
-            />
-            <button type="submit">Connect</button>
-          </form>
+            <form
+              className={styles.card}
+              onSubmit={(event) => handleSubmit(event, "HubSpot")}
+            >
+              <input
+                name="tenant_domain"
+                placeholder="Tenant Domain"
+                required
+              />
+              <input name="client_id" placeholder="Client ID" required />
+              <input
+                name="client_secret"
+                placeholder="Client Secret"
+                required
+              />
+              <input
+                name="field_mappings"
+                placeholder="Field Mappings"
+                required
+              />
+              <button type="submit">Connect</button>
+            </form>
+          </ExpanderPanel>
 
-          <form
-            className={styles.card}
-            onSubmit={(event) => handleSubmit(event, "Zapier")}
+          <ExpanderPanel
+            title="Zapier"
+            expanded={expandedPanel === 3}
+            onToggle={() => handleToggle(3)}
           >
-            <h3>Zapier</h3>
-            <input name="api_key" placeholder="API Key" required />
-            <button type="submit">Connect</button>
-          </form>
+            <form
+              className={styles.card}
+              onSubmit={(event) => handleSubmit(event, "Zapier")}
+            >
+              <input name="api_key" placeholder="API Key" required />
+              <button type="submit">Connect</button>
+            </form>
+          </ExpanderPanel>
         </div>
       </main>
     </div>
