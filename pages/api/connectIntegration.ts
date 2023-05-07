@@ -1,30 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { IntegrationSettings } from "../../types/integrationTypes";
+
+// edit the integration settings type on the integrationTypes.ts file.
 
 type Data = {
   success: boolean;
   message: string;
 };
-
-interface SalesforceSettings {
-  client_id: string;
-  client_secret: string;
-}
-
-interface ZapierSettings {
-  api_key: string;
-}
-
-interface HubSpotSettings {
-  tenant_domain: string;
-  client_id: string;
-  client_secret: string;
-  field_mappings: Record<string, string>;
-}
-
-type IntegrationSettings =
-  | { integrationType: "Salesforce"; settings: SalesforceSettings }
-  | { integrationType: "Zapier"; settings: ZapierSettings }
-  | { integrationType: "HubSpot"; settings: HubSpotSettings };
 
 export default function handler(
   req: NextApiRequest,

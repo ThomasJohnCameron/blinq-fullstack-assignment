@@ -1,3 +1,5 @@
+import { IntegrationSettings } from "../types/integrationTypes";
+
 export interface User {
   id: string;
   given_name: string;
@@ -15,6 +17,8 @@ export interface Contact {
 }
 
 export class Database {
+  private static integrationSettings: Partial<IntegrationSettings> = {};
+
   public static getUser(): User {
     return {
       id: "12345",
@@ -43,5 +47,18 @@ export class Database {
         notes: "Terry has a beard.",
       },
     ];
+  }
+
+  public static getIntegrationSettings<T extends keyof IntegrationSettings>(
+    integrationType: T
+  ): IntegrationSettings[T] | undefined {
+    return this.integrationSettings[integrationType] as IntegrationSettings[T];
+  }
+
+  public static setIntegrationSettings<T extends keyof IntegrationSettings>(
+    integrationType: T,
+    settings: IntegrationSettings[T]
+  ): void {
+    this.integrationSettings[integrationType] = settings;
   }
 }
