@@ -1,4 +1,4 @@
-import { IntegrationSettings } from "../types/integrationTypes";
+import type { Integration, IntegrationName } from "@integration/types";
 
 export interface User {
   id: string;
@@ -17,7 +17,42 @@ export interface Contact {
 }
 
 export class Database {
-  private static integrationSettings: Partial<IntegrationSettings> = {};
+  private userEnabledIntegrations: Array<Integration>;
+
+  constructor() {
+    this.userEnabledIntegrations = [
+      {
+        name: "Salesforce",
+        settings: {
+          client_id: "12345",
+          client_secret: "12345",
+        },
+      },
+    ];
+  }
+
+  public static getAvaliableIntegrations(): Array<IntegrationName> {
+    return ["Salesforce", "HubSpot", "Zapier"];
+  }
+
+  getUserEnabledIntegrations(): Array<Integration> {
+    return this.userEnabledIntegrations as Array<Integration>;
+  }
+
+  removeUserIntegration(name: IntegrationName): Array<Integration> {
+    this.userEnabledIntegrations = this.userEnabledIntegrations.filter(
+      (integration) => integration.name !== name
+    );
+    return this.userEnabledIntegrations as Array<Integration>;
+  }
+
+  addUserIntegration(newIntegration: Integration): Array<Integration> {
+    this.userEnabledIntegrations = this.userEnabledIntegrations.filter(
+      (integration) => integration.name !== newIntegration.name
+    );
+    this.userEnabledIntegrations.push(newIntegration);
+    return this.userEnabledIntegrations as Array<Integration>;
+  }
 
   public static getUser(): User {
     return {
@@ -47,18 +82,5 @@ export class Database {
         notes: "Terry has a beard.",
       },
     ];
-  }
-
-  public static getIntegrationSettings<T extends keyof IntegrationSettings>(
-    integrationType: T
-  ): IntegrationSettings[T] | undefined {
-    return this.integrationSettings[integrationType] as IntegrationSettings[T];
-  }
-
-  public static setIntegrationSettings<T extends keyof IntegrationSettings>(
-    integrationType: T,
-    settings: IntegrationSettings[T]
-  ): void {
-    this.integrationSettings[integrationType] = settings;
   }
 }

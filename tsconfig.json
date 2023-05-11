@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@utils/*": ["./utils/*"],
+      "@integration/*": ["./integration/*"]
+    },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,

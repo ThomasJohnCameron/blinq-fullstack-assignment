@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { IntegrationSettings } from "../../types/integrationTypes";
-
+import type { Integration } from "@integration/types";
 // edit the integration settings type on the integrationTypes.ts file.
 
 type Data = {
@@ -13,9 +12,7 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === "POST") {
-    const requestBody: IntegrationSettings = req.body;
-
-    const { integrationType, settings } = requestBody;
+    const requestBody: Integration = req.body;
 
     res.status(200).json({ success: true, message: "Integration connected" });
   } else {
