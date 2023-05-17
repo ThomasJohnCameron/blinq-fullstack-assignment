@@ -1,52 +1,41 @@
 import type { Integration, IntegrationName } from "@integration/types";
-
-export interface User {
-  id: string;
-  given_name: string;
-  family_name: string;
-  email: string;
-}
-
-export interface Contact {
-  id: string;
-  given_name: string;
-  family_name: string;
-  email: string;
-  met_at_location: string;
-  notes?: string;
-}
+import type { User, Contact } from "./types";
 
 export class Database {
-  private userEnabledIntegrations: Array<Integration>;
+  private userEnabledIntegrations: Integration[];
 
-  constructor() {
-    this.userEnabledIntegrations = [
-      {
-        name: "Salesforce",
-        settings: {
-          client_id: "12345",
-          client_secret: "12345",
+  constructor(userEnabledIntegrations?: Integration[]) {
+    if (userEnabledIntegrations) {
+      this.userEnabledIntegrations = userEnabledIntegrations;
+    } else {
+      this.userEnabledIntegrations = [
+        {
+          name: "Salesforce",
+          settings: {
+            client_id: "12345",
+            client_secret: "12345",
+          },
         },
-      },
-    ];
+      ];
+    }
   }
 
-  public static getAvaliableIntegrations(): Array<IntegrationName> {
+  public getAvailableIntegrations(): Array<IntegrationName> {
     return ["Salesforce", "HubSpot", "Zapier"];
   }
 
-  getUserEnabledIntegrations(): Array<Integration> {
+  public getUserEnabledIntegrations(): Array<Integration> {
     return this.userEnabledIntegrations as Array<Integration>;
   }
 
-  removeUserIntegration(name: IntegrationName): Array<Integration> {
+  public removeUserIntegration(name: IntegrationName): Array<Integration> {
     this.userEnabledIntegrations = this.userEnabledIntegrations.filter(
       (integration) => integration.name !== name
     );
     return this.userEnabledIntegrations as Array<Integration>;
   }
 
-  addUserIntegration(newIntegration: Integration): Array<Integration> {
+  public addUserIntegration(newIntegration: Integration): Array<Integration> {
     this.userEnabledIntegrations = this.userEnabledIntegrations.filter(
       (integration) => integration.name !== newIntegration.name
     );
@@ -54,7 +43,7 @@ export class Database {
     return this.userEnabledIntegrations as Array<Integration>;
   }
 
-  public static getUser(): User {
+  public getUser(): User {
     return {
       id: "12345",
       given_name: "Jane",
@@ -63,7 +52,7 @@ export class Database {
     };
   }
 
-  public static getContacts(): Contact[] {
+  public getContacts(): Contact[] {
     return [
       {
         id: "1234",
@@ -84,3 +73,5 @@ export class Database {
     ];
   }
 }
+
+export const database = new Database();

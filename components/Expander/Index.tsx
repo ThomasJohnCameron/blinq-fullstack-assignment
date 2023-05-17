@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 interface ExpanderPanelProps {
-  title: string;
+  title: React.ReactNode;
   children: React.ReactNode;
   expanded: boolean;
   onToggle: () => void;

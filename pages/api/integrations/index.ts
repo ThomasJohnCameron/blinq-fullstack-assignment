@@ -1,11 +1,9 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import { parseName } from "@integration/types";
+import type { Integration, IntegrationName } from "@integration/types";
+import { database } from "../../../database";
+import integrations from "@api/integrations";
 
-type Data = {
-  name: string;
-};
-
-export default function handler(
-  _req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {}
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  integrations(database, req, res);
+}
