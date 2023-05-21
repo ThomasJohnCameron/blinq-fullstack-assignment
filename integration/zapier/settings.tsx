@@ -26,7 +26,9 @@ export const AddZapier: React.FC<AddIntegrationComponentProps<Name>> = ({
       <h3>Add integration</h3>
       <form className={styles.card} onSubmit={handleSubmit}>
         <input name="api_key" placeholder="API Key" required />
-        <button type="submit">Connect Zapier</button>
+        <button className={styles.button} type="submit">
+          Connect Zapier
+        </button>
       </form>
     </>
   );
@@ -50,11 +52,7 @@ export const EditZapier: React.FC<
   };
   return (
     <>
-      <h3>Remove</h3>
-      <button type="button" onClick={() => removeIntegration(integration.name)}>
-        Remove Zapier Integration
-      </button>
-      <h3>Edit</h3>
+      <h3>Update</h3>
       <form className={styles.card} onSubmit={handleSubmit}>
         <input
           name="tenant_domain"
@@ -64,8 +62,18 @@ export const EditZapier: React.FC<
         />
         <input name="client_id" placeholder="Client ID" required />
         <input name="client_secret" placeholder="Client Secret" required />
-        <button type="submit">Update Zapier Integration</button>
+        <button className={styles.button} type="submit">
+          Update Zapier Integration
+        </button>
       </form>
+      <h3>Remove</h3>
+      <button
+        className={styles.button}
+        type="button"
+        onClick={() => removeIntegration(integration.name)}
+      >
+        Remove Zapier Integration
+      </button>
     </>
   );
 };
